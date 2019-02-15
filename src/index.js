@@ -3,6 +3,7 @@ import session from 'express-session'
 import passport from 'passport'
 import { ApolloServer } from 'apollo-server-express'
 import mongoose from 'mongoose'
+import { sync } from './sequelize'
 import schema from './schema'
 import setupRoute from './route'
 import { uri as mongodbUri } from './config/mongodb'
@@ -33,7 +34,10 @@ apollo.applyMiddleware({ app })
 
 app.use((req, res) => res.send('hello, world!'))
 
-mongoose.connect(mongodbUri, { useNewUrlParser: true }).then(
+Promise.all([
+  mongoose.connect(mongodbUri, { useNewUrlParser: true }),
+  sync(),
+]).then(
   () => {
     app.listen(port, () => {
       // eslint-disable-next-line no-console

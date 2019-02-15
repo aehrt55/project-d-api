@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import delay from 'delay'
 import { uri } from './config/mysql'
 
 const sequelize = new Sequelize(uri, {
@@ -13,6 +14,17 @@ const sequelize = new Sequelize(uri, {
   },
 })
 
-sequelize.sync()
+export async function sync() {
+  let connected = false
+  while (!connected) {
+    try {
+      await sequelize.authenticate()
+      connected = true
+    } catch {
+      await delay(1000)
+    }
+  }
+  await sequelize.sync()
+}
 
 export default sequelize
