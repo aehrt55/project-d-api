@@ -1,0 +1,61 @@
+{
+  "name": "project-d-api",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=10.15.0",
+    "npm": ">=5.2.0"
+  },
+  "description": "project D",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "BABEL_ENV=production babel src --out-dir dist --copy-files --ignore *.test.js",
+    "dev": "nodemon src/index.js",
+    "start": "node dist/index.js",
+    "test": "jest --coverage",
+    "test:watch": "jest -o --watch --coverage --verbose=false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/aehrt55/project-d-api.git"
+  },
+  "author": "aehrt55",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aehrt55/project-d-api/issues"
+  },
+  "homepage": "https://github.com/aehrt55/project-d-api#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.4.0",
+    "body-parser": "^1.18.3",
+    "connect-redis": "^3.4.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "graphql": "^14.1.1",
+    "mongoose": "^5.4.11",
+    "mysql2": "^1.6.5",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "sequelize": "^5.0.0-beta.16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "eslint": "^5.13.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-flowtype": "^3.2.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "flow-bin": "^0.92.1",
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.10",
+    "prettier": "^1.16.4"
+  }
+}
