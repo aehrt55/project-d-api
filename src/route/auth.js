@@ -25,7 +25,6 @@ passport.use(
     {
       clientID: appId,
       clientSecret: appSecret,
-      callbackURL: 'http://localhost/api/auth/facebook',
     },
     async (accessToken, refreshToken, { id, displayName }, done) => {
       let user
@@ -40,13 +39,17 @@ passport.use(
 
 const authRouter = Router()
 
-authRouter.get(
-  '/facebook',
-  passport.authenticate('facebook', {
+const authenticateFacebook = (req, res, next) => {
+  const xForwardedPrefix = req.headers['x-forwarded-prefix'] || '/'
+  const currentUrl = `${xForwardedPrefix}${req.originalUrl.replace(/^\//, '')}`
+  const authenticate = passport.authenticate('facebook', {
     scope: ['public_profile'],
-    successRedirect: '/',
-    failureRedirect: '/api/auth/facebook',
-  }),
-)
+    callbackURL: currentUrl,
+    successRedirect: req.query.redirectUri || '/',
+    failureRedirect: currentUrl,
+  })
+  return authenticate(req, res, next)
+}
+authRouter.get('/facebook', authenticateFacebook)
 
 export default authRouter
