@@ -14,6 +14,11 @@ import PostRepository from '../repository/PostRepository'
 const RootQuery = new GraphQLObjectType({
   name: 'Root_Query',
   fields: {
+    me: {
+      type: User,
+      description: 'My data',
+      resolve: (source, _, { user }) => user || null,
+    },
     post: {
       type: Post,
       description: 'Post',
