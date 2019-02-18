@@ -51,5 +51,9 @@ const authenticateFacebook = (req, res, next) => {
   return authenticate(req, res, next)
 }
 authRouter.get('/facebook', authenticateFacebook)
+authRouter.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/')
+})
 
 export default authRouter
