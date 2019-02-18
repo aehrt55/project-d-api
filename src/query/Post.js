@@ -1,4 +1,9 @@
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql'
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+} from 'graphql'
 import User from './User'
 import UserRepository from '../repository/UserRepository'
 import PostLikeRepository from '../repository/PostLikeRepository'
@@ -29,9 +34,17 @@ const Post = new GraphQLObjectType({
         if (!user || !user.id) {
           return false
         }
-        const postLike = PostLikeRepository.findByPostIdAndUserId(id, user.id)
+        const postLike = await PostLikeRepository.findByPostIdAndUserId(
+          id,
+          user.id,
+        )
         return postLike !== null
       },
+    },
+    likes: {
+      type: GraphQLInt,
+      description: 'likes',
+      resolve: async ({ id }) => PostLikeRepository.countByPostId(id),
     },
   },
 })

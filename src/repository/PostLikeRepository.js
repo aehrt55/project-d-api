@@ -9,4 +9,12 @@ export default class PostLikeRepository {
       },
     })
   }
+  static async countByPostId(postId) {
+    return await PostLike.count({
+      where: {
+        postId,
+      },
+      col: 'postId',
+    })
+  }
 }

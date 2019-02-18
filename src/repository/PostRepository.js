@@ -20,4 +20,10 @@ export default class PostRepository {
       raw: true,
     })
   }
+  static async findLatest(limit, skip = 0) {
+    return await Post.find({})
+      .sort([['createdAt', -1]])
+      .limit(limit)
+      .skip(skip)
+  }
 }

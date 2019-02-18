@@ -35,14 +35,24 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: (source, { id }) => UserRepository.findById(id),
     },
-    topPosts: {
+    topPostLikes: {
       type: new GraphQLList(PostLikes),
-      description: 'top posts',
+      description: 'top post likes',
       args: {
         skip: { type: new GraphQLNonNull(GraphQLInt) },
         limit: { type: new GraphQLNonNull(GraphQLInt) },
       },
       resolve: (source, { skip, limit }) => PostRepository.findTop(limit, skip),
+    },
+    latestPosts: {
+      type: new GraphQLList(Post),
+      description: 'latest posts',
+      args: {
+        skip: { type: new GraphQLNonNull(GraphQLInt) },
+        limit: { type: new GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: (source, { skip, limit }) =>
+        PostRepository.findLatest(limit, skip),
     },
   },
 })
